@@ -4,7 +4,10 @@ PALABRAS_RESERVADAS = {
     'using', 'namespace', 'class', 'static', 'void',
     'int', 'float', 'double', 'string', 'bool',
     'if', 'else', 'for', 'while', 'return',
-    'Console', 'Write', 'Line', 'Read', 'Parse'
+    'Console', 'Write', 'Line', 'Read', 'Parse','switch', 
+    'case', 'default', 'break', 'continue', 'do', 'foreach', 'in',
+    'struct', 'interface','null', 'true', 'false','public', 
+    'private', 'protected', 'internal'
 }
 
 
