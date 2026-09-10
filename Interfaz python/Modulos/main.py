@@ -38,7 +38,10 @@ def imprimir_resultados(ruta, tokens, errores):
 
 
 def main():
-    ruta = os.path.join(_DIR, '..', 'HolaMundo.cs')
+    if len(sys.argv) > 1:
+        ruta = sys.argv[1]
+    else:
+        ruta = os.path.join(_DIR, '..', 'HolaMundo.cs')
 
     lector = LectorArchivo()
     lector.leer_archivo(ruta)
