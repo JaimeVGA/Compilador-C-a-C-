@@ -89,15 +89,6 @@ Los modulos siguen el diagrama de clases definido en la documentacion:
 ```bash
 cd "Interfaz python/Modulos"
 python3 main.py
-```
-
----
-
-## Integrantes
-
-- Joel
-- Levi
-- Alberto
-
+`
 **Materia:** Compiladores — 5to Semestre
 **Universidad:** UTM
