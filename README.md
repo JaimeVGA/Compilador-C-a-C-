@@ -106,11 +106,7 @@ python3 main.py
 
 ---
 
-## Integrantes
 
-- Joel
-- Levi
-- Alberto
 
 **Materia:** Compiladores — 5to Semestre
 **Universidad:** UTM
