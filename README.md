@@ -86,9 +86,31 @@ Los modulos siguen el diagrama de clases definido en la documentacion:
 
 ### Como ejecutar
 
+#### Interfaz grafica
+
+Desde la raiz del repositorio:
+
+```bash
+python3 "Interfaz python/interfaz.py"
+```
+
+La interfaz permite cargar un archivo `.cs`, ejecutar el analisis lexico y consultar
+los tokens y errores encontrados.
+
+#### Linea de comandos
+
 ```bash
 cd "Interfaz python/Modulos"
 python3 main.py
-`
+```
+
+---
+
+## Integrantes
+
+- Joel
+- Levi
+- Alberto
+
 **Materia:** Compiladores — 5to Semestre
 **Universidad:** UTM
