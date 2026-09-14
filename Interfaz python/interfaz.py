@@ -137,6 +137,7 @@ class AplicacionAnalizador(tk.Tk):
         contenido.add(panel_codigo, minsize=600, stretch="always")
 
         self.codigo = self._crear_texto(panel_codigo, "#111827")
+        self._actualizar_numeros_linea()
 
         self.estado_var = tk.StringVar(value="Listo para analizar un archivo.")
         tk.Label(
@@ -159,20 +160,46 @@ class AplicacionAnalizador(tk.Tk):
     def _crear_texto(self, padre, fondo):
         contenedor = tk.Frame(padre, bg=self.COLORES["panel"])
         contenedor.pack(fill="both", expand=True, padx=12, pady=(0, 12))
+        self.numeros_linea = tk.Text(
+            contenedor, width=5, wrap="none", state="disabled",
+            font=("Consolas", 10), bg="#0f172a", fg=self.COLORES["secundario"],
+            relief="flat", padx=6, pady=10, takefocus=0
+        )
         texto = tk.Text(
             contenedor, wrap="none", undo=False, font=("Consolas", 10),
             bg=fondo, fg=self.COLORES["texto"], insertbackground=self.COLORES["texto"],
             relief="flat", padx=12, pady=10
         )
-        scroll_y = ttk.Scrollbar(contenedor, orient="vertical", command=texto.yview)
+        scroll_y = ttk.Scrollbar(
+            contenedor, orient="vertical", command=self._sincronizar_scroll_vertical
+        )
         scroll_x = ttk.Scrollbar(contenedor, orient="horizontal", command=texto.xview)
-        texto.configure(yscrollcommand=scroll_y.set, xscrollcommand=scroll_x.set)
-        texto.grid(row=0, column=0, sticky="nsew")
-        scroll_y.grid(row=0, column=1, sticky="ns")
-        scroll_x.grid(row=1, column=0, sticky="ew")
+        texto.configure(yscrollcommand=lambda a, b: self._on_codigo_scroll(a, b, scroll_y),
+                        xscrollcommand=scroll_x.set)
+        self.numeros_linea.grid(row=0, column=0, sticky="ns")
+        texto.grid(row=0, column=1, sticky="nsew")
+        scroll_y.grid(row=0, column=2, sticky="ns")
+        scroll_x.grid(row=1, column=1, sticky="ew")
         contenedor.rowconfigure(0, weight=1)
-        contenedor.columnconfigure(0, weight=1)
+        contenedor.columnconfigure(1, weight=1)
+        texto.bind("<KeyRelease>", self._actualizar_numeros_linea)
         return texto
+
+    def _sincronizar_scroll_vertical(self, *args):
+        self.codigo.yview(*args)
+        self.numeros_linea.yview(*args)
+
+    def _on_codigo_scroll(self, first, last, scroll):
+        scroll.set(first, last)
+        self.numeros_linea.yview_moveto(first)
+
+    def _actualizar_numeros_linea(self, _event=None):
+        total_lineas = int(self.codigo.index("end-1c").split(".")[0])
+        contenido = "\n".join(str(linea) for linea in range(1, total_lineas + 1))
+        self.numeros_linea.configure(state="normal")
+        self.numeros_linea.delete("1.0", tk.END)
+        self.numeros_linea.insert("1.0", contenido)
+        self.numeros_linea.configure(state="disabled")
 
     def _crear_resultados(self, padre):
         contenedor = tk.Frame(padre, bg=self.COLORES["panel"])
@@ -321,6 +348,7 @@ class AplicacionAnalizador(tk.Tk):
         self.ruta_var.set(ruta)
         self.codigo.delete("1.0", tk.END)
         self.codigo.insert("1.0", contenido)
+        self._actualizar_numeros_linea()
         if self.ventana_resultados is not None and self.ventana_resultados.winfo_exists():
             self.ventana_resultados.destroy()
         self.estado_var.set("Archivo cargado. Presiona «Analizar» para comenzar.")
