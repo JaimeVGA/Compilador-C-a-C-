@@ -2,12 +2,13 @@ from dataclasses import dataclass
 
 PALABRAS_RESERVADAS = {
     'using', 'namespace', 'class', 'static', 'void',
-    'int', 'float', 'double', 'string', 'bool',
+    'int', 'float', 'double', 'string', 'char', 'bool',
     'if', 'else', 'for', 'while', 'return',
     'Console', 'Write', 'Line', 'Read', 'Parse','switch', 
     'case', 'default', 'break', 'continue', 'do', 'foreach', 'in',
     'struct', 'interface','null', 'true', 'false','public', 
-    'private', 'protected', 'internal'
+    'private', 'protected', 'internal', 'new', 'unsafe', 'fixed',
+    'const', 'readonly', 'ref', 'out', 'params', 'this', 'base',
 }
 
 

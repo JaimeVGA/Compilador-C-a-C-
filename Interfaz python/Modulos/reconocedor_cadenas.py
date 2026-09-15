@@ -6,21 +6,28 @@ from tokens import Token
 class ReconocedorCadenasYCaracteres(ReconocedorTokens):
 
     def procesar(self) -> Optional[Token]:
+        if self.lector.ver_actual() == '$' and self.lector.espiar() == '"':
+            return self._procesar_cadena(interpolada=True)
         if self.lector.ver_actual() == '"':
             return self._procesar_cadena()
         elif self.lector.ver_actual() == "'":
             return self._procesar_caracter()
         return None
 
-    def _procesar_cadena(self) -> Optional[Token]:
+    def _procesar_cadena(self, interpolada=False) -> Optional[Token]:
         renglon, columna = self.lector.renglon, self.lector.columna
+        if interpolada:
+            self.lector.siguiente_caracter()
         self.lector.siguiente_caracter()  # consume "
-        lexema = '"'
+        lexema = '$"' if interpolada else '"'
         while self.lector.ver_actual() is not None and self.lector.ver_actual() != '"':
             if self.lector.ver_actual() == '\n':
                 self.manejador_errores.registrar_error('"(cadena sin cerrar)', renglon, columna)
                 return None
-            lexema += self.lector.siguiente_caracter()
+            caracter = self.lector.siguiente_caracter()
+            lexema += caracter
+            if caracter == '\\' and self.lector.ver_actual() is not None:
+                lexema += self.lector.siguiente_caracter()
         if self.lector.ver_actual() == '"':
             lexema += self.lector.siguiente_caracter()  # consume "
             return Token('LiteralCadena', lexema, renglon, columna)
@@ -32,7 +39,10 @@ class ReconocedorCadenasYCaracteres(ReconocedorTokens):
         self.lector.siguiente_caracter()  # consume '
         lexema = "'"
         if self.lector.ver_actual() is not None and self.lector.ver_actual() != "'":
-            lexema += self.lector.siguiente_caracter()
+            caracter = self.lector.siguiente_caracter()
+            lexema += caracter
+            if caracter == '\\' and self.lector.ver_actual() is not None:
+                lexema += self.lector.siguiente_caracter()
         if self.lector.ver_actual() == "'":
             lexema += self.lector.siguiente_caracter()  # consume '
             return Token('LiteralCaracter', lexema, renglon, columna)

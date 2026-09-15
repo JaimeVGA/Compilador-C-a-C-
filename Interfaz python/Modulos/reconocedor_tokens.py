@@ -40,7 +40,7 @@ class ReconocedorTokens:
                 if tk:
                     tokens.append(tk)
 
-            elif c in ('"', "'"):
+            elif c in ('"', "'") or (c == '$' and self.lector.espiar() == '"'):
                 tk = cadenas_rec.procesar()
                 if tk:
                     tokens.append(tk)

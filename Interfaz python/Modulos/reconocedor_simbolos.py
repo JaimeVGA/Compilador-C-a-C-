@@ -2,7 +2,10 @@ from typing import Optional
 from reconocedor_tokens import ReconocedorTokens
 from tokens import Token
 
-_DELIMITADORES_SIMPLES = frozenset({'{', '}', '(', ')', '[', ']', ';', ',', '.', '$', '*', '/'})
+_DELIMITADORES_SIMPLES = frozenset({
+    '{', '}', '(', ')', '[', ']', ';', ',', '.', '*', '/', '%',
+    '&', '|', '^', '~', '?', ':',
+})
 
 
 class ReconocedorSimbolosYLimpieza(ReconocedorTokens):
@@ -33,50 +36,19 @@ class ReconocedorSimbolosYLimpieza(ReconocedorTokens):
         renglon, columna = self.lector.renglon, self.lector.columna
         c = self.lector.siguiente_caracter()
 
-        if c == '=':
-            if self.lector.ver_actual() == '=':
-                self.lector.siguiente_caracter()
-                return Token('==', '==', renglon, columna)
-            return Token('=', '=', renglon, columna)
+        siguiente = self.lector.ver_actual()
+        operadores_dobles = {
+            '==', '=>', '++', '+=', '--', '-=', '*=', '/=', '%=',
+            '&&', '||', '^=', '<=', '>=', '<<', '>>',
+        }
+        if siguiente is not None and c + siguiente in operadores_dobles:
+            self.lector.siguiente_caracter()
+            operador = c + siguiente
+            return Token(operador, operador, renglon, columna)
 
-        elif c == '!':
-            if self.lector.ver_actual() == '=':
-                self.lector.siguiente_caracter()
-                return Token('!=', '!=', renglon, columna)
-            self.manejador_errores.registrar_error('!', renglon, columna)
-            return None
-
-        elif c == '<':
-            if self.lector.ver_actual() == '=':
-                self.lector.siguiente_caracter()
-                return Token('<=', '<=', renglon, columna)
-            return Token('<', '<', renglon, columna)
-
-        elif c == '>':
-            if self.lector.ver_actual() == '=':
-                self.lector.siguiente_caracter()
-                return Token('>=', '>=', renglon, columna)
-            return Token('>', '>', renglon, columna)
-
-        elif c == '+':
-            if self.lector.ver_actual() == '+':
-                self.lector.siguiente_caracter()
-                return Token('++', '++', renglon, columna)
-            elif self.lector.ver_actual() == '=':
-                self.lector.siguiente_caracter()
-                return Token('+=', '+=', renglon, columna)
-            return Token('+', '+', renglon, columna)
-
-        elif c == '-':
-            if self.lector.ver_actual() == '-':
-                self.lector.siguiente_caracter()
-                return Token('--', '--', renglon, columna)
-            elif self.lector.ver_actual() == '=':
-                self.lector.siguiente_caracter()
-                return Token('-=', '-=', renglon, columna)
-            return Token('-', '-', renglon, columna)
-
-        elif c in ('{', '}', '(', ')', '[', ']', ';', ',', '.', '$', '*', '/'):
+        elif c in ('=', '+', '-', '*', '/', '%', '&', '|', '^', '<', '>',
+                   '!', '~', '?', ':', '{', '}', '(', ')', '[', ']', ';', ',',
+                   '.'):
             return Token(c, c, renglon, columna)
 
         else:
