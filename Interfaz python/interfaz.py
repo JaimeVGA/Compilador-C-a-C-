@@ -52,16 +52,13 @@ class AplicacionAnalizador(tk.Tk):
             font=("Segoe UI", 10), bg=COLORES["superficie"],
             fg=COLORES["secundario"],
         ).pack(side="left", fill="x", expand=True, padx=16, pady=12)
-        ttk.Button(controles, text="Cargar archivo", command=self.cargar_archivo).pack(
-            side="right", padx=(4, 8), pady=8
-        )
         ttk.Button(
             controles, text="Analizar", style="Accent.TButton",
             command=self.analizar_archivo,
-        ).pack(side="right", padx=8, pady=8)
+        ).pack(side="right", padx=(4, 8), pady=8)
         ttk.Button(
-            controles, text="Limpiar", command=self.limpiar,
-        ).pack(side="right", padx=(0, 8), pady=8)
+            controles, text="Cargar archivo", command=self.cargar_archivo,
+        ).pack(side="right", padx=8, pady=8)
 
         panel_codigo = crear_superficie(self)
         panel_codigo.pack(fill="both", expand=True, padx=34, pady=(0, 14))
@@ -90,7 +87,8 @@ class AplicacionAnalizador(tk.Tk):
         )
         self.codigo = tk.Text(
             contenedor, wrap="none", undo=False, font=("Consolas", 10),
-            bg="#fbfdff", fg=COLORES["texto"], insertbackground=COLORES["texto"],
+            bg=COLORES["superficie_alt"], fg=COLORES["texto"],
+            insertbackground=COLORES["texto"],
             relief="flat", padx=12, pady=10,
         )
         scroll_y = ttk.Scrollbar(contenedor, orient="vertical", command=self._scroll_vertical)
@@ -165,17 +163,6 @@ class AplicacionAnalizador(tk.Tk):
         self.estado_var.set(
             f"Análisis terminado: {len(tokens)} tokens y {len(errores)} errores."
         )
-
-    def limpiar(self):
-        self.archivo_actual = ""
-        self.ruta_var.set("Ningún archivo seleccionado")
-        self.codigo.delete("1.0", tk.END)
-        self._actualizar_numeros_linea()
-        if self.ventana_resultados and self.ventana_resultados.winfo_exists():
-            self.ventana_resultados.destroy()
-        self.ventana_resultados = None
-        self.estado_var.set("Editor limpio. Selecciona un archivo C# para comenzar.")
-
 
 if __name__ == "__main__":
     AplicacionAnalizador().mainloop()
