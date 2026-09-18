@@ -1,6 +1,7 @@
 """Ventana que agrupa las salidas del análisis léxico."""
 
 import os
+import sys
 import tkinter as tk
 from tkinter import ttk
 
@@ -18,7 +19,8 @@ class VentanaResultados(tk.Toplevel):
         self.minsize(760, 480)
         self.resizable(True, True)
         self.configure(bg=COLORES["fondo"])
-        self.transient(padre)
+        if sys.platform == "win32":
+            self.wm_attributes("-toolwindow", False)
 
         cabecera = tk.Frame(self, bg=COLORES["fondo"])
         cabecera.pack(fill="x", padx=28, pady=(24, 14))

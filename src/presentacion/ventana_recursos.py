@@ -1,5 +1,6 @@
 """Ventana con los recursos del analizador léxico."""
 
+import sys
 import tkinter as tk
 from tkinter import ttk
 
@@ -28,6 +29,8 @@ class VentanaRecursos(tk.Toplevel):
         self.minsize(700, 480)
         self.resizable(True, True)
         self.configure(bg=COLORES["fondo"])
+        if sys.platform == "win32":
+            self.wm_attributes("-toolwindow", False)
 
         cabecera = tk.Frame(self, bg=COLORES["fondo"])
         cabecera.pack(fill="x", padx=28, pady=(24, 14))

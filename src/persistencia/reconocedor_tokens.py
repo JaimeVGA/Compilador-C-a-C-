@@ -1,5 +1,5 @@
 from typing import List
-from ..persistencia.lector_archivo import LectorArchivo
+from .lector_archivo import LectorArchivo
 from .manejador_errores import ManejadorErrores
 from ..modelos.tokens import Token
 

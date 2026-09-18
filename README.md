@@ -21,8 +21,7 @@ Compilador-C-a-C-/
 │   ├── modelos/
 │   │   └── tokens.py                  # Token, ErrorLexico, PALABRAS_RESERVADAS
 │   ├── persistencia/
-│   │   └── lector_archivo.py          # LectorArchivo
-│   ├── negocio/
+│   │   ├── lector_archivo.py          # LectorArchivo
 │   │   ├── reconocedor_tokens.py      # ReconocedorTokens (clase base)
 │   │   ├── reconocedor_ids.py         # ReconocedorIDsYReservadas
 │   │   ├── reconocedor_numeros.py     # ReconocedorNumeros

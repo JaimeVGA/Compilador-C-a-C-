@@ -11,8 +11,8 @@ if _ROOT_DIR not in sys.path:
     sys.path.insert(0, _ROOT_DIR)
 
 from src.persistencia.lector_archivo import LectorArchivo
-from src.negocio.manejador_errores import ManejadorErrores
-from src.negocio.reconocedor_tokens import ReconocedorTokens
+from src.persistencia.manejador_errores import ManejadorErrores
+from src.persistencia.reconocedor_tokens import ReconocedorTokens
 from src.presentacion.estilos import COLORES, configurar_estilos, crear_superficie
 from src.presentacion.ventana_recursos import VentanaRecursos
 from src.presentacion.ventana_resultados import VentanaResultados
@@ -70,7 +70,7 @@ class AplicacionAnalizador(tk.Tk):
         panel_codigo = crear_superficie(self)
         panel_codigo.pack(fill="both", expand=True, padx=34, pady=(0, 14))
         tk.Label(
-            panel_codigo, text="Programa fuente", anchor="w",
+            panel_codigo, text="Programa fuente (Cualquier cambio que se realice aqui no se reflejara en el análisis, solo es un previsualizador)", anchor="w",
             font=("Segoe UI", 12, "bold"), bg=COLORES["superficie"],
             fg=COLORES["texto"],
         ).pack(fill="x", padx=16, pady=(14, 8))
