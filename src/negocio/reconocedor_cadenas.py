@@ -1,6 +1,6 @@
 from typing import Optional
-from reconocedor_tokens import ReconocedorTokens
-from tokens import Token
+from .reconocedor_tokens import ReconocedorTokens
+from ..modelos.tokens import Token
 
 
 class ReconocedorCadenasYCaracteres(ReconocedorTokens):

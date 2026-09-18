@@ -16,6 +16,7 @@ class VentanaResultados(tk.Toplevel):
         self.title("Resultados del análisis léxico")
         self.geometry("980x650")
         self.minsize(760, 480)
+        self.resizable(True, True)
         self.configure(bg=COLORES["fondo"])
         self.transient(padre)
 

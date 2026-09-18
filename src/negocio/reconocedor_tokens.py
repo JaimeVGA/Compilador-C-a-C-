@@ -1,7 +1,7 @@
 from typing import List
-from lector_archivo import LectorArchivo
-from manejador_errores import ManejadorErrores
-from tokens import Token
+from ..persistencia.lector_archivo import LectorArchivo
+from .manejador_errores import ManejadorErrores
+from ..modelos.tokens import Token
 
 
 class ReconocedorTokens:
@@ -12,10 +12,10 @@ class ReconocedorTokens:
 
     def analizar(self) -> List[Token]:
         # Importaciones diferidas para evitar importaciones circulares
-        from reconocedor_ids import ReconocedorIDsYReservadas
-        from reconocedor_numeros import ReconocedorNumeros
-        from reconocedor_cadenas import ReconocedorCadenasYCaracteres
-        from reconocedor_simbolos import ReconocedorSimbolosYLimpieza
+        from .reconocedor_ids import ReconocedorIDsYReservadas
+        from .reconocedor_numeros import ReconocedorNumeros
+        from .reconocedor_cadenas import ReconocedorCadenasYCaracteres
+        from .reconocedor_simbolos import ReconocedorSimbolosYLimpieza
 
         tokens: List[Token] = []
         ids_rec = ReconocedorIDsYReservadas(self.lector, self.manejador_errores)

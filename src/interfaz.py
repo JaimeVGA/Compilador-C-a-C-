@@ -5,15 +5,17 @@ import sys
 import tkinter as tk
 from tkinter import filedialog, messagebox, ttk
 
-MODULOS_DIR = os.path.join(os.path.dirname(__file__), "Modulos")
-if MODULOS_DIR not in sys.path:
-    sys.path.insert(0, MODULOS_DIR)
+_SRC_DIR = os.path.dirname(__file__)
+_ROOT_DIR = os.path.dirname(_SRC_DIR)
+if _ROOT_DIR not in sys.path:
+    sys.path.insert(0, _ROOT_DIR)
 
-from lector_archivo import LectorArchivo
-from manejador_errores import ManejadorErrores
-from reconocedor_tokens import ReconocedorTokens
-from ui.estilos import COLORES, configurar_estilos, crear_superficie
-from ui.ventana_resultados import VentanaResultados
+from src.persistencia.lector_archivo import LectorArchivo
+from src.negocio.manejador_errores import ManejadorErrores
+from src.negocio.reconocedor_tokens import ReconocedorTokens
+from src.presentacion.estilos import COLORES, configurar_estilos, crear_superficie
+from src.presentacion.ventana_recursos import VentanaRecursos
+from src.presentacion.ventana_resultados import VentanaResultados
 
 
 class AplicacionAnalizador(tk.Tk):
@@ -23,9 +25,11 @@ class AplicacionAnalizador(tk.Tk):
         super().__init__()
         self.archivo_actual = ""
         self.ventana_resultados = None
+        self.ventana_recursos = None
         self.title("Compilador C# a C++ · Analizador léxico")
         self.geometry("1180x760")
         self.minsize(900, 600)
+        self.resizable(True, True)
         self.configure(bg=COLORES["fondo"])
         configurar_estilos(self)
         self._crear_interfaz()
@@ -59,6 +63,9 @@ class AplicacionAnalizador(tk.Tk):
         ttk.Button(
             controles, text="Cargar archivo", command=self.cargar_archivo,
         ).pack(side="right", padx=8, pady=8)
+        ttk.Button(
+            controles, text="Recursos", command=self.mostrar_recursos,
+        ).pack(side="right", padx=(8, 4), pady=8)
 
         panel_codigo = crear_superficie(self)
         panel_codigo.pack(fill="both", expand=True, padx=34, pady=(0, 14))
@@ -163,6 +170,14 @@ class AplicacionAnalizador(tk.Tk):
         self.estado_var.set(
             f"Análisis terminado: {len(tokens)} tokens y {len(errores)} errores."
         )
+
+    def mostrar_recursos(self):
+        if self.ventana_recursos and self.ventana_recursos.winfo_exists():
+            self.ventana_recursos.deiconify()
+            self.ventana_recursos.lift()
+            self.ventana_recursos.focus_force()
+            return
+        self.ventana_recursos = VentanaRecursos(self)
 
 if __name__ == "__main__":
     AplicacionAnalizador().mainloop()

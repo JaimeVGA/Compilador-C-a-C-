@@ -1,6 +1,6 @@
 from typing import Optional
-from reconocedor_tokens import ReconocedorTokens
-from tokens import Token
+from .reconocedor_tokens import ReconocedorTokens
+from ..modelos.tokens import Token
 
 _DELIMITADORES_SIMPLES = frozenset({
     '{', '}', '(', ')', '[', ']', ';', ',', '.', '*', '/', '%',
@@ -38,7 +38,7 @@ class ReconocedorSimbolosYLimpieza(ReconocedorTokens):
 
         siguiente = self.lector.ver_actual()
         operadores_dobles = {
-            '==', '=>', '++', '+=', '--', '-=', '*=', '/=', '%=',
+            '==', '=>', '->', '++', '+=', '--', '-=', '*=', '/=', '%=',
             '&&', '||', '^=', '<=', '>=', '<<', '>>',
         }
         if siguiente is not None and c + siguiente in operadores_dobles:

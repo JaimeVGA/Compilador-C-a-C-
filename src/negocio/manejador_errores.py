@@ -1,5 +1,5 @@
 from typing import List
-from tokens import ErrorLexico
+from ..modelos.tokens import ErrorLexico
 
 
 class ManejadorErrores:

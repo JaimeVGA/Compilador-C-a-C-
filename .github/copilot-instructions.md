@@ -6,23 +6,12 @@ This is a C# to C++ compiler translator, currently in **Phase 1: Lexical Analysi
 
 ## Running the Code
 
-### Main Lexical Analyzer Entry Point
-
-```bash
-cd "Interfaz python/Modulos"
-python3 main.py [optional_file_path]
-```
-
-- **Default behavior**: Analyzes `../HolaMundo.cs`
-- **Custom file**: Pass a file path as argument: `python3 main.py /path/to/file.cs`
-- **Output**: Displays found tokens and lexical errors with line and column numbers
-
 ### Graphical Interface
 
 Launch the light-themed Tkinter interface from the repository root:
 
 ```bash
-python3 "Interfaz python/interfaz.py"
+python3 src/interfaz.py
 ```
 
 Use **Cargar archivo** to select a `.cs` file, then **Analizar** to run the existing
@@ -30,7 +19,7 @@ lexer. The interface displays the source code, token table, lexical errors, and 
 
 ### Import Path Setup
 
-The `main.py` file adds its own directory to `sys.path`, so modules in `Modulos/` can import each other directly without relative imports.
+The entry points add the repository root to `sys.path`; internal modules use package imports from `src`.
 
 ## Architecture Overview
 

@@ -17,18 +17,26 @@ Compilador que lee codigo fuente en **C#** y lo traduce a **C++**. El proyecto s
 
 ```
 Compilador-C-a-C-/
-├── Interfaz python/
-│   ├── Lectura.py
-│   └── Modulos/
-│       ├── main.py                    # Punto de entrada
-│       ├── tokens.py                  # Token, ErrorLexico, PALABRAS_RESERVADAS
-│       ├── manejador_errores.py       # ManejadorErrores
-│       ├── lector_archivo.py          # LectorArchivo
-│       ├── reconocedor_tokens.py      # ReconocedorTokens (clase base)
-│       ├── reconocedor_ids.py         # ReconocedorIDsYReservadas
-│       ├── reconocedor_numeros.py     # ReconocedorNumeros
-│       ├── reconocedor_cadenas.py     # ReconocedorCadenasYCaracteres
-│       └── reconocedor_simbolos.py    # ReconocedorSimbolosYLimpieza
+├── src/
+│   ├── modelos/
+│   │   └── tokens.py                  # Token, ErrorLexico, PALABRAS_RESERVADAS
+│   ├── persistencia/
+│   │   └── lector_archivo.py          # LectorArchivo
+│   ├── negocio/
+│   │   ├── reconocedor_tokens.py      # ReconocedorTokens (clase base)
+│   │   ├── reconocedor_ids.py         # ReconocedorIDsYReservadas
+│   │   ├── reconocedor_numeros.py     # ReconocedorNumeros
+│   │   ├── reconocedor_cadenas.py     # ReconocedorCadenasYCaracteres
+│   │   ├── reconocedor_simbolos.py    # ReconocedorSimbolosYLimpieza
+│   │   └── manejador_errores.py       # ManejadorErrores
+│   ├── presentacion/
+│   │   ├── ventana_resultados.py
+│   │   ├── tabla_base.py
+│   │   ├── tabla_errores.py
+│   │   ├── tabla_simbolos.py
+│   │   ├── tira_tokens.py
+│   │   └── estilos.py
+│   └── interfaz.py                    # Punto de entrada de la interfaz gráfica
 ├── automatas Jflap/                   # Diagramas AFD en formato JFlap
 ├── documentacion/                     # Documentacion del proyecto
 └── README.md
@@ -78,7 +86,7 @@ Los modulos siguen el diagrama de clases definido en la documentacion:
 
 **Operadores**
 
-`=` `==` `+` `+=` `++` `-` `-=` `--` `*` `/` `<` `<=` `>` `>=` `!=`
+`=` `==` `+` `+=` `++` `-` `-=` `--` `*` `/` `<` `<=` `>` `>=` `!=` `->`
 
 **Delimitadores**
 
@@ -91,20 +99,12 @@ Los modulos siguen el diagrama de clases definido en la documentacion:
 Desde la raiz del repositorio:
 
 ```bash
-python3 "Interfaz python/interfaz.py"
+python3 src/interfaz.py
 ```
 
 La interfaz permite cargar un archivo `.cs`, ejecutar el analisis lexico y consultar
 los tokens y errores encontrados.
 
-#### Linea de comandos
-
-```bash
-cd "Interfaz python/Modulos"
-python3 main.py
-```
-
----
 
 
 
